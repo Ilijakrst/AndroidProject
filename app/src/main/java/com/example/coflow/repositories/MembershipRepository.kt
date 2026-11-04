@@ -70,5 +70,5 @@ interface MembershipRepository {
      * - При ошибке слушателя отправляется [Result.failure], поток закрывается.
      * - Подписка снимается при отмене сбора.
      */
-    fun observeByProjectId(projectId: String): Flow<Result<List<MembershipModel>>>
+    fun observeByProjectId(id: String): Flow<Result<List<MembershipModel>>>
 }

@@ -121,10 +121,10 @@ class FirebaseMembershipRepositoryImpl(
      *
      * @see MembershipRepository.observeByProjectId
      */
-    override fun observeByProjectId(projectId: String): Flow<Result<List<MembershipModel>>> =
+    override fun observeByProjectId(id: String): Flow<Result<List<MembershipModel>>> =
         callbackFlow {
             val registration = membershipCollection
-                .whereEqualTo("projectId", projectId)
+                .whereEqualTo("projectId", id)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
                         trySend(
@@ -136,7 +136,8 @@ class FirebaseMembershipRepositoryImpl(
                     } else {
                         trySend(
                             Result.success(
-                                snapshot?.documents
+                                snapshot
+                                    ?.documents
                                     ?.mapNotNull { it.toMembershipModel() }
                                     .orEmpty(),
                             ),

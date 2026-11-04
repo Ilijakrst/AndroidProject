@@ -106,10 +106,10 @@ class FirebaseTaskRepositoryImpl(
      *
      * @see TaskRepository.observeById
      */
-    override fun observeById(taskId: String): Flow<Result<TaskModel>> =
+    override fun observeById(id: String): Flow<Result<TaskModel>> =
         callbackFlow {
             val registration = taskCollection
-                .document(taskId)
+                .document(id)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
                         trySend(
